@@ -1,16 +1,19 @@
 sudo: required
 
-language: python
-
-python:
-  - 3.6
-
 services:
   - docker
 
 install:
-  - pip install -r requirements.txt
+  - docker-compose build
 
-before_install:
-- docker build -t mattthinkwhere/walshsoft .
-- docker run -d -p 8000:8000 mattthinkwhere/walshsoft
+script:
+  - docker-compose run
+
+#before_script:
+#  - python manage.py migrate
+#script:
+#  - python manage.py test
+
+#before_install:
+#- docker build -t mattthinkwhere/walshsoft .
+#- docker run -d -p 8000:8000 mattthinkwhere/walshsoft

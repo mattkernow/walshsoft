@@ -1,0 +1,10 @@
+version: "3.2"
+
+services:
+  app:
+    build:
+      context: .
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+    volumes:
+      - ./:/code
