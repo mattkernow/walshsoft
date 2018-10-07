@@ -4,7 +4,10 @@ services:
   app:
     build:
       context: .
+    command: "python manage.py runserver 0.0.0.0:8000"
     environment:
       - PYTHONDONTWRITEBYTECODE=1
     volumes:
       - ./:/code
+    ports:
+      - "8000:8000"
