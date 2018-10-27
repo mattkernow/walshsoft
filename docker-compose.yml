@@ -4,14 +4,11 @@ services:
   web:
     restart: always
     build: ./web/
-    command: '/usr/local/bin/gunicorn walshsoft.wsgi:application --bind :8000'
 
   nginx:
     restart: always
     build: ./nginx/
     ports:
       - '80:80'
-    volumes:
-      - /www/static
     links:
       - web:web
