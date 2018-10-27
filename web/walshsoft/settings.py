@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'postcode_api.apps.PostcodeApiConfig',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'walshsoft.wsgi.application'
 
+GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
