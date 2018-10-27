@@ -11,7 +11,3 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 ADD . /code/
-
-EXPOSE 8000
-
-CMD ['gunicorn', 'walshsoft.wsgi:application', '--bind', ':8000']

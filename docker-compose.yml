@@ -1,13 +1,17 @@
-version: "3.2"
+version: '3.2'
 
 services:
-  app:
-    build:
-      context: .
-    command: "python manage.py runserver 0.0.0.0:8000"
-    environment:
-      - PYTHONDONTWRITEBYTECODE=1
-    volumes:
-      - ./:/code
+  web:
+    restart: always
+    build: ./web/
+    command: '/usr/local/bin/gunicorn walshsoft.wsgi:application --bind :8000'
+
+  nginx:
+    restart: always
+    build: ./nginx/
     ports:
-      - "8000:8000"
+      - '80:80'
+    volumes:
+      - /www/static
+    links:
+      - web:web
