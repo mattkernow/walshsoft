@@ -16,6 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from postcode_api.views import postcode
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('postcode/<str:postcode>', postcode, name='postcode'),
 ]

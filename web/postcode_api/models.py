@@ -1,3 +1,7 @@
-from django.db import models
+from django.contrib.gis.db import models
 
-# Create your models here.
+
+class Postcode(models.Model):
+    """Postcode model."""
+    postcode = models.CharField(max_length=8)
+    geom = models.PointField(srid=27700)

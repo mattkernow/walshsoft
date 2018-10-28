@@ -74,6 +74,8 @@ WSGI_APPLICATION = 'walshsoft.wsgi.application'
 
 GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
 
+GEOS_LIBRARY_PATH = '/usr/lib/libgeos_c.so'
+
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
