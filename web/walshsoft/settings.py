@@ -76,12 +76,11 @@ GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
 
 GEOS_LIBRARY_PATH = '/usr/lib/libgeos_c.so'
 
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+# SPATIALITE_LIBRARY_PATH = '/usr/lib/mod_spatialite.so'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.contrib.gis.db.backends.spatialite',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
