@@ -76,7 +76,7 @@ GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
 
 GEOS_LIBRARY_PATH = '/usr/lib/libgeos_c.so'
 
-# SPATIALITE_LIBRARY_PATH = '/usr/lib/mod_spatialite.so'
+SPATIALITE_LIBRARY_PATH = '/libspatialite-4.3.0a/src/.libs/mod_spatialite.so'
 
 DATABASES = {
     'default': {
