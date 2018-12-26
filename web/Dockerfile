@@ -3,6 +3,8 @@ FROM python:3.7-alpine
 ENV PYTHONUNBUFFERED 1
 ENV DJANGO_SETTINGS_MODULE walshsoft.settings
 
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/main openssl
+
 # Install GeoDjango dependencies
 RUN apk add --no-cache --virtual .build-deps \
         --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
