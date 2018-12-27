@@ -6,11 +6,12 @@ metadata:
     app: walshsoft-app
 spec:
   restartPolicy: Always
-
   containers:
   - name: nginx
     image: gcr.io/walshsoft-218612/nginx:v9
     ports:
     - containerPort: 80
   - name: web
-    image: gcr.io/walshsoft-218612/web:v9
+    image: gcr.io/walshsoft-218612/web:v10
+    command: ["gunicorn"]
+    args: ["walshsoft.wsgi:application", "--bind", ":8000"]
