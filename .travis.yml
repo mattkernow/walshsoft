@@ -1,12 +1,48 @@
-sudo: required
+# Use Dockerized infrastructure
+sudo: false
 
+# Use node_js environnement
+language: python
+
+# Cache Gcloud SDK between commands
+cache:
+  directories:
+    - "$HOME/google-cloud-sdk/"
+
+# Install services
 services:
   - docker
 
+# Set env vars
+env:
+  global:
+    - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
+    - PROJECT_NAME=walshsoft-218612
+    - CLUSTER_NAME=walshsoft-cluster
+    - CLOUDSDK_COMPUTE_ZONE=europe-north1-a
+    - NGINX_DOCKER_IMAGE_NAME=nginx
+    - WEB_DOCKER_IMAGE_NAME=web
+    - KUBE_DEPLOYMENT_NAME=walshsoft-service
+    - KUBE_DEPLOYMENT_CONTAINER_NAME=appexample
+
 install:
-  - docker-compose build
+  - npm install
 
 script:
-  - docker-compose up
-  - docker-compose exec web python manage.py migrate
-  - docker-compose exec web python manage.py test
+  - docker build -t gcr.io/${PROJECT_NAME}/${DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT .
+  - docker run --rm -d --name web gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT /bin/sh -c "python manage.py test"
+
+before_deploy:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components beta update
+  - gcloud --quiet components update kubectl
+
+deploy:
+  - provider: script
+    script: ./deploy.sh
+    skip_cleanup: true
+    on:
+      branch: master
