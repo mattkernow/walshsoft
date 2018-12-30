@@ -15,7 +15,7 @@ env:
     - GOOGLE_APPLICATION_CREDENTIALS=~/gcloud-service-key.json
     - PROJECT_NAME=walshsoft-218612
     - CLUSTER_NAME=walshsoft-cluster
-    - CLOUDSDK_COMPUTE_ZONE=europe-north1-a
+    - CLOUDSDK_COMPUTE_ZONE=us-east1-d
     - NGINX_DOCKER_IMAGE_NAME=nginx
     - WEB_DOCKER_IMAGE_NAME=web
     - KUBE_DEPLOYMENT_NAME=walshsoft-service
