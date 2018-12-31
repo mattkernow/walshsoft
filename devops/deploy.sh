@@ -20,8 +20,8 @@ yes | gcloud beta container images add-tag gcr.io/${PROJECT_NAME}/${NGINX_DOCKER
 kubectl config view
 kubectl config current-context
 
-kubectl set image deployment/walshsoft-deployment web=${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:latest \
-                                                  nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:latest
+kubectl set image deployment/walshsoft-deployment web=${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME} \
+                                                  nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}
 kubectl describe deployment walshsoft-deployment
 
 # sleep 30
