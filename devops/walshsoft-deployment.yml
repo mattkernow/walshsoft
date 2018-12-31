@@ -14,12 +14,12 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: gcr.io/walshsoft-218612/nginx:latest
-          imagePullPolicy: "Always"
+        image: "gcr.io/walshsoft-218612/nginx:latest"
+        imagePullPolicy: "Always"
         ports:
         - containerPort: 80
       - name: web
-        image: gcr.io/walshsoft-218612/web:latest
-          imagePullPolicy: "Always"
+        image: "gcr.io/walshsoft-218612/web:latest"
+        imagePullPolicy: "Always"
         command: ["gunicorn"]
         args: ["walshsoft.wsgi:application", "--bind", ":8000"]
