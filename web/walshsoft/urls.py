@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.http import JsonResponse
 
 from postcode_api.views import postcode
-from walshsoft.views import health
 
 urlpatterns = [
-    path(r'^$', health),
+    path('', lambda r: JsonResponse(data={'health': 'good'}), name='health'),
     path('admin/', admin.site.urls),
     path('postcode/<str:postcode>', postcode, name='postcode'),
 ]
