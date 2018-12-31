@@ -20,7 +20,7 @@ from postcode_api.views import postcode
 from walshsoft.views import health
 
 urlpatterns = [
-    path('/', health),
+    path(r'^$', health),
     path('admin/', admin.site.urls),
     path('postcode/<str:postcode>', postcode, name='postcode'),
 ]
