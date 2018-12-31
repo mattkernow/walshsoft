@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: walshsoft-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: walshsoft-app
+  template:
+    metadata:
+      labels:
+        app: walshsoft-app
+    spec:
+      containers:
+      - name: nginx
+        image: gcr.io/walshsoft-218612/nginx:latest
+          imagePullPolicy: "Always"
+        ports:
+        - containerPort: 80
+      - name: web
+        image: gcr.io/walshsoft-218612/web:latest
+          imagePullPolicy: "Always"
+        command: ["gunicorn"]
+        args: ["walshsoft.wsgi:application", "--bind", ":8000"]

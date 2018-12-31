@@ -20,7 +20,10 @@ yes | gcloud beta container images add-tag gcr.io/${PROJECT_NAME}/${NGINX_DOCKER
 kubectl config view
 kubectl config current-context
 
-kubectl set image deployment/${KUBE_DEPLOYMENT_NAME} ${KUBE_DEPLOYMENT_CONTAINER_NAME}=gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT
+kubectl describe deployment walshsoft-deployment
+kubectl set image deployment/walshsoft-deployment web=${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT \
+                                                  nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT
+kubectl describe deployment walshsoft-deployment
 
 # sleep 30
 # npm run e2e_test
