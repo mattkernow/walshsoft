@@ -1,7 +1,5 @@
 sudo: false
 
-language: python
-
 # Cache Gcloud SDK between commands
 cache:
   directories:
