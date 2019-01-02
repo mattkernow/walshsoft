@@ -22,7 +22,4 @@ kubectl config view
 kubectl config current-context
 
 kubectl set image deployment/walshsoft-deployment web=gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
-# kubectl set image deployment/walshsoft-deployment nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
-
-# sleep 30
-# npm run e2e_test
+kubectl set image deployment/walshsoft-deployment nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
