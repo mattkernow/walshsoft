@@ -21,5 +21,6 @@ yes | gcloud beta container images add-tag gcr.io/${PROJECT_NAME}/${NGINX_DOCKER
 kubectl config view
 kubectl config current-context
 
+echo "DEPLOYING DOCKER IMAGES"
 kubectl set image deployment/walshsoft-deployment web=gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
 kubectl set image deployment/walshsoft-deployment nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
