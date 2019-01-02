@@ -20,7 +20,7 @@ from django.http import JsonResponse
 from postcode_api.views import postcode
 
 urlpatterns = [
-    path('', lambda r: JsonResponse(data={'health': 'really rather good'}), name='health'),
+    path('', lambda r: JsonResponse(data={'health': 'really super good'}), name='health'),
     path('admin/', admin.site.urls),
     path('postcode/<str:postcode>', postcode, name='postcode'),
 ]
