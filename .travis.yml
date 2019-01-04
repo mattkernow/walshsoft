@@ -22,7 +22,7 @@ env:
 script:
     # Only build if its not development branch
     - |
-      if [ $TRAVIS_BRANCH != "development" && $TRAVIS_PULL_REQUEST != "false" ]; then
+      if [ $TRAVIS_BRANCH != "development" ]; then
         docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
         docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
       fi
