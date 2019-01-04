@@ -20,12 +20,12 @@ env:
     - KUBE_DEPLOYMENT_CONTAINER_NAME=appexample
 
 script:
-    # Only build if its not development branch
-    - |
-      if [ $TRAVIS_BRANCH != "development" ]; then
-        docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
-        docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
-      fi
+  # Only build if its not development branch
+  - |
+    if [ $TRAVIS_BRANCH != "development" ]; then
+      docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
+      docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
+    fi
 
 # Run unit tests
   - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
