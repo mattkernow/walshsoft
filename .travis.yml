@@ -26,9 +26,9 @@ script:
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
+  # Use latest image to reduce build time when devoping
   - |
     TAG=$TRAVIS_COMMIT
-    # Use latest image to reduce build time when devoping
     if [ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]; then
         TAG="latest"
     fi
