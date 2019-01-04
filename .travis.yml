@@ -27,11 +27,16 @@ script:
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
 
+    TAG=$TRAVIS_COMMIT
+    if [ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]; then
+        TAG="latest"
+    fi
+
 # Run unit tests
-  - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
+  - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:TAG /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
   # Run integration tests against docker host
-  - docker run --name web -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
-  - docker run --rm --name integration --env POSTCODE_HOST=web gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT /bin/sh -c "pytest web/postcode_api/tests/tests_integration && pip freeze"
+  - docker run --name web -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
+  - docker run --rm --name integration --env POSTCODE_HOST=web gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "pytest web/postcode_api/tests/tests_integration && pip freeze"
 
 before_deploy:
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
