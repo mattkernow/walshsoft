@@ -22,5 +22,12 @@ kubectl config view
 kubectl config current-context
 
 echo "DEPLOYING DOCKER IMAGES"
+
+TAG=$TRAVIS_COMMIT
+
+if [ $TRAVIS_BRANCH != "development" && $TRAVIS_PULL_REQUEST != "false" ]; then
+    TAG="latest"
+fi
+
 kubectl set image deployment/walshsoft-deployment web=gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
 kubectl set image deployment/walshsoft-deployment nginx=gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT --record
