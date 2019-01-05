@@ -3,8 +3,6 @@
 set -e
 
 echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
-gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-gcloud auth configure-docker
 
 gcloud --quiet config set project $PROJECT_NAME
 gcloud --quiet config set container/cluster $CLUSTER_NAME
