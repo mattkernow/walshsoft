@@ -23,9 +23,8 @@ script:
   # Only build if its not the "development" branch
   - |
     if [ $TRAVIS_BRANCH != "development" ]; then
-      gcloud --quiet container clusters get-credentials $CLUSTER_NAME
-      docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
-      docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
+      - docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
+      - docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
   # Use latest image to reduce build time when developing CI
   - |
