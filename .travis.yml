@@ -31,7 +31,7 @@ script:
   - |
     TAG=$TRAVIS_COMMIT
     if [ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]; then
-        TAG="latest"
+        TAG="916cc6e9855d07bb4a1111512a1277695654e897"
     fi
 
 # Run unit tests
