@@ -28,10 +28,10 @@ script:
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
-  # Use latest image to reduce build time when developing CI
+  # Pull built image to reduce build time when developing CI
   - |
     TAG=$TRAVIS_COMMIT
-    if [ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]; then
+    if [[ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]]; then
         echo "DEVELOPMENT - SKIPPING DOCKER BUILD"
         TAG="916cc6e9855d07bb4a1111512a1277695654e897"
     fi
