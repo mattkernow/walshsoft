@@ -21,10 +21,14 @@ env:
 
 script:
   # Only build if its not the "development" branch
-  - gcloud --quiet container clusters get-credentials $CLUSTER_NAME
   - |
     if [ $TRAVIS_BRANCH != "development" ]; then
       echo "BUILDING APP IMAGES"
+      echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
+      gcloud --quiet config set project $PROJECT_NAME
+      gcloud --quiet config set container/cluster $CLUSTER_NAME
+      gcloud --quiet config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
+      gcloud --quiet container clusters get-credentials $CLUSTER_NAME
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
