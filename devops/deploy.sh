@@ -2,6 +2,8 @@
 
 set -e
 
+
+
 echo "PUSHING DOCKER IMAGES TO REMOTE"
 docker push gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}
 docker push gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}
