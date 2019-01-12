@@ -31,6 +31,7 @@ script:
   - |
     TAG=$TRAVIS_COMMIT
     if [ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]; then
+        echo "DEVELOPMENT - SKIPPING DOCKER BUILD"
         TAG="916cc6e9855d07bb4a1111512a1277695654e897"
     fi
 
