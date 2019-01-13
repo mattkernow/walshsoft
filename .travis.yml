@@ -38,13 +38,13 @@ script:
   # Check for "DEPLOY_TAG" environmental variable - if not set then build images
   - |
     TAG=$TRAVIS_COMMIT
-    if [ -z "${DEPLOY_TAG}" ]; then
-      echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
-      TAG=${DEPLOY_TAG}
-    else
-      echo "BUILDING APP IMAGES..."
+    if [[ -z "${DEPLOY_TAG}" ]]; then
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
+    else
+      echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
+            TAG=${DEPLOY_TAG}
+      echo "BUILDING APP IMAGES..."
     fi
   # Run unit tests
   - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
