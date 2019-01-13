@@ -1,6 +1,5 @@
 sudo: false
 
-# Cache Gcloud SDK between commands
 cache:
   directories:
     - "$HOME/google-cloud-sdk/"
@@ -20,12 +19,13 @@ env:
     - KUBE_DEPLOYMENT_CONTAINER_NAME=appexample
 
 before_script:
+  # Install gcloud
   - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
   - source /home/travis/google-cloud-sdk/path.bash.inc
   - gcloud --quiet version
   - gcloud --quiet components update
   - gcloud --quiet components update kubectl
-
+  # Authenticate and configure project
   - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
   - gcloud --quiet auth configure-docker
@@ -37,17 +37,14 @@ before_script:
 script:
   # Only build if its not the "development" branch
   - |
-    if [ $TRAVIS_BRANCH != "development" ]; then
+    if [[ -z ${DEPLOY_TAG} ]]; then
+      echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
+      TAG=${DEPLOY_ENV}
+    else
       echo "BUILDING APP IMAGES..."
+      TAG=$TRAVIS_COMMIT
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
-    fi
-  # Pull built image to reduce build time when developing CI
-  - |
-    TAG=$TRAVIS_COMMIT
-    if [[ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]]; then
-        echo "DEVELOPMENT - SKIPPING DOCKER BUILD"
-        TAG="916cc6e9855d07bb4a1111512a1277695654e897"
     fi
 
 # Run unit tests
