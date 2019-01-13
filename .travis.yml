@@ -40,7 +40,7 @@ script:
     TAG=$TRAVIS_COMMIT
     if [[ -z "${DEPLOY_TAG}" ]]; then
       echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
-      TAG=${DEPLOY_ENV}
+      TAG=${DEPLOY_TAG}
     else
       echo "BUILDING APP IMAGES..."
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
