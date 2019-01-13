@@ -19,7 +19,7 @@ env:
     - KUBE_DEPLOYMENT_NAME=walshsoft-service
     - KUBE_DEPLOYMENT_CONTAINER_NAME=appexample
 
-script:
+before_script:
   - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
 #  - gcloud --quiet auth configure-docker
@@ -28,6 +28,7 @@ script:
   - gcloud --quiet config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
   - gcloud --quiet container clusters get-credentials $CLUSTER_NAME
 
+script:
   # Only build if its not the "development" branch
   - |
     if [ $TRAVIS_BRANCH != "development" ]; then
