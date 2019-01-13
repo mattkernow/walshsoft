@@ -35,14 +35,15 @@ before_script:
   - gcloud --quiet container clusters get-credentials $CLUSTER_NAME
 
 script:
-  # Check for "DEPLOY_TAG" - if not set then build images
+  # Check for "DEPLOY_TAG" environmental variable - if not set then build images
   - |
+    printenv DEPLOY_TAG
+    TAG=$TRAVIS_COMMIT
     if [[ -z ${DEPLOY_TAG} ]]; then
       echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
       TAG=${DEPLOY_ENV}
     else
       echo "BUILDING APP IMAGES..."
-      TAG=$TRAVIS_COMMIT
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
