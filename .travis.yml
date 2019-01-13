@@ -37,9 +37,8 @@ before_script:
 script:
   # Check for "DEPLOY_TAG" environmental variable - if not set then build images
   - |
-    printenv DEPLOY_TAG
     TAG=$TRAVIS_COMMIT
-    if [[ -z ${DEPLOY_TAG} ]]; then
+    if [[ -z "${DEPLOY_TAG}" ]]; then
       echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
       TAG=${DEPLOY_ENV}
     else
