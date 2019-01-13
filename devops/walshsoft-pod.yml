@@ -11,6 +11,12 @@ spec:
     image: gcr.io/walshsoft-218612/nginx:v9
     ports:
     - containerPort: 80
+    readinessProbe:
+      httpGet:
+        path: /health
+        port: 80
+      initialDelaySeconds: 5
+      timeoutSeconds: 5
   - name: web
     image: gcr.io/walshsoft-218612/web:v10
     command: ["gunicorn"]

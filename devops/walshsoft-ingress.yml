@@ -6,6 +6,3 @@ spec:
   backend:
     serviceName: walshsoft-service
     servicePort: 80
-  redinessProbe:
-    httpGet:
-        path: /health
