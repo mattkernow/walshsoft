@@ -11,7 +11,6 @@ if [[ -z ${DEPLOY_TAG} ]]; then
     yes | gcloud beta container images add-tag gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:latest
 fi
 
-kubectl config view
 kubectl config current-context
 
 echo "PERFORM ROLLING UPDATE..."
