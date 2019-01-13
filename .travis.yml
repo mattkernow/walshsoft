@@ -35,7 +35,7 @@ before_script:
   - gcloud --quiet container clusters get-credentials $CLUSTER_NAME
 
 script:
-  # Only build if its not the "development" branch
+  # Check for "DEPLOY_TAG" - if not set then build images
   - |
     if [[ -z ${DEPLOY_TAG} ]]; then
       echo "DEPLOY_TAG ENV VAR PRESENT - SKIPPING DOCKER BUILD"
@@ -46,8 +46,7 @@ script:
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
-
-# Run unit tests
+  # Run unit tests
   - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
   # Run integration tests against docker host
   - docker run --name web -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
