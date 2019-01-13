@@ -4,7 +4,7 @@ test_name: Get a GeoJson postcode response from the Postcode API
 stages:
   - name: Request a postcode
     request:
-      url: http://{tavern.env_vars.POSTCODE_HOST}/postcode/eh111ah
+      url: http://{tavern.env_vars.POSTCODE_HOST}:{tavern.env_vars.POSTCODE_PORT}/postcode/eh111ah
       method: GET
     response:
       status_code: 200
