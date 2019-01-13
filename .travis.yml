@@ -61,4 +61,5 @@ deploy:
 
 after_deploy:
   # Run integration tests against docker host
-  - sleep 60 && docker run --rm --env POSTCODE_HOST=35.228.129.21 --env POSTCODE_PORT=80 gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "pytest /code/postcode_api/tests/tests_integration"
+  - sleep 60
+  - docker run --rm --env POSTCODE_HOST=35.228.129.21 --env POSTCODE_PORT=80 gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "pytest /code/postcode_api/tests/tests_integration"
