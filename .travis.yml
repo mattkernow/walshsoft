@@ -31,7 +31,7 @@ script:
   # Only build if its not the "development" branch
   - |
     if [ $TRAVIS_BRANCH != "development" ]; then
-      echo "BUILDING APP IMAGES"
+      echo "BUILDING APP IMAGES..."
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT web/
       docker build --quiet -t gcr.io/${PROJECT_NAME}/${NGINX_DOCKER_IMAGE_NAME}:$TRAVIS_COMMIT nginx/
     fi
@@ -46,7 +46,7 @@ script:
 # Run unit tests
   - docker run --rm --name unit gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "python manage.py test postcode_api/tests/tests_unit"
   # Run integration tests against docker host
-  - docker run --name web -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
+  - docker run --name web -p 80:80 -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
   - docker logs web
   - curl -I http://web/postcode/eh111ah
   - docker run --rm --link web:web --name integration --env POSTCODE_HOST=web gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "find / -name tests_integration -type d && pytest /code/postcode_api/tests/tests_integration"
