@@ -20,9 +20,15 @@ env:
     - KUBE_DEPLOYMENT_CONTAINER_NAME=appexample
 
 before_script:
+  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+  - source /home/travis/google-cloud-sdk/path.bash.inc
+  - gcloud --quiet version
+  - gcloud --quiet components update
+  - gcloud --quiet components update kubectl
+
   - echo $GCLOUD_SERVICE_KEY | base64 --decode -i > ${HOME}/gcloud-service-key.json
   - gcloud auth activate-service-account --key-file ${HOME}/gcloud-service-key.json
-#  - gcloud --quiet auth configure-docker
+  - gcloud --quiet auth configure-docker
   - gcloud --quiet config set project $PROJECT_NAME
   - gcloud --quiet config set container/cluster $CLUSTER_NAME
   - gcloud --quiet config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
@@ -49,13 +55,6 @@ script:
   # Run integration tests against docker host
   - docker run --name web -d gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "gunicorn walshsoft.wsgi:application --bind :8000"
   - docker run --rm --link web:web --name integration --env POSTCODE_HOST=web --env POSTCODE_PORT=8000 gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "find / -name tests_integration -type d && pytest /code/postcode_api/tests/tests_integration"
-
-before_deploy:
-  - if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
-  - source /home/travis/google-cloud-sdk/path.bash.inc
-  - gcloud --quiet version
-  - gcloud --quiet components update
-  - gcloud --quiet components update kubectl
 
 deploy:
   - provider: script
