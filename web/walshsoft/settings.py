@@ -73,6 +73,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'walshsoft.wsgi.application'
 
 GDAL_LIBRARY_PATH = '/usr/lib/libgdal.so'
+# GDAL_LIBRARY_PATH = '/Applications/QGIS3.app/Contents/PlugIns/qgis/libgdalprovider.so'
 
 GEOS_LIBRARY_PATH = '/usr/lib/libgeos_c.so'
 
