@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: walshsoft-service
 spec:
-  type: NodePort  # Set to LoadBalancer when no SSL/ingress
+  type: LoadBalancer  # Set to NodePort when using SSL
   selector:
     app: walshsoft-app
   ports:
