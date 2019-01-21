@@ -58,6 +58,3 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-
-after_deploy:
-  # Run integration tests post deployment
