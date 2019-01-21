@@ -56,7 +56,10 @@ ROOT_URLCONF = 'walshsoft.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'cv', 'templates')
+        ]
         ,
         'APP_DIRS': True,
         'OPTIONS': {

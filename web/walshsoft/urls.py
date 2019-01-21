@@ -18,11 +18,11 @@ from django.urls import path
 from django.http import JsonResponse
 
 from postcode_api.views import postcode
-from home.views import home
+from cv.views import cv
 
 urlpatterns = [
     path('health/', lambda r: JsonResponse(data={'health': 'alive'}), name='health'),
     path('admin/', admin.site.urls),
     path('postcode/<str:postcode>', postcode, name='postcode'),
-    path('', home, name='home'),
+    path('cv/', cv, name='cv'),
 ]
