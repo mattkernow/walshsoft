@@ -21,7 +21,7 @@ from postcode_api.views import postcode
 from cv.views import cv
 
 urlpatterns = [
-    path('health/', lambda r: JsonResponse(data={'health': 'alive'}), name='health'),
+    path('health/', lambda r: JsonResponse(data={'health': 'alive!'}), name='health'),
     path('admin/', admin.site.urls),
     path('postcode/<str:postcode>', postcode, name='postcode'),
     path('cv/', cv, name='cv'),
