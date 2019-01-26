@@ -23,4 +23,4 @@ kubectl set image deployment/walshsoft-deployment nginx=gcr.io/${PROJECT_NAME}/$
 
 echo "RUNNING INTEGRATION TESTS POST DEPLOYMENT"
 sleep 60
-docker run --rm --env POSTCODE_HOST=35.228.129.21 --env POSTCODE_PORT=80 gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "pytest --disable-pytest-warnings /code/postcode_api/tests/tests_integration"
+docker run --rm --env POSTCODE_HOST=35.228.184.190 --env POSTCODE_PORT=80 gcr.io/${PROJECT_NAME}/${WEB_DOCKER_IMAGE_NAME}:$TAG /bin/sh -c "pytest --disable-pytest-warnings /code/postcode_api/tests/tests_integration"
